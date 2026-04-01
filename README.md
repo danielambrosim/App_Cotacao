@@ -29,8 +29,3 @@ Este aplicativo mostra o valor atualizado de moedas (como Dólar, Euro) ou cript
 ```bash
 git clone https://github.com/danielambrosim/App_Cotacao.git
 cd App_Cotacao
-
----
-
-Apresentação da NÚMERO 1  
-API_KEY=d02fbaba7760b03e7bc655f4
