@@ -28,11 +28,11 @@ python -m venv venv
 ```
 
 ## Ative o ambiente:
-## Windows:
+-Windows:
 ```bash
 venv\Scripts\activate
 ```
-## Linux/Mac:
+-Linux/Mac:
 ```bash
 source venv/bin/activate
 ```
@@ -42,12 +42,12 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-# 4. Crie o arquivo .env com sua chave API
+## 4. Crie o arquivo .env com sua chave API
 ```bash
 echo "API_KEY=sua_chave_api_aqui" > .env
 ```
 
-# 5. Execute o app
+## 5. Execute o app
 ```bash
 python app.py
 ```
