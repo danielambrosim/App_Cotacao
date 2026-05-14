@@ -1,31 +1,58 @@
-# 💱 App Cotação
+# 💱 App Cotação - Sistema de Cotações de Moedas em Tempo Real
 
-Um aplicativo simples para consultar cotações de moedas, criptomoedas ou outros ativos em tempo real.
+[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/)
+[![Flask Version](https://img.shields.io/badge/flask-2.3.3-green.svg)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/license-MIT-red.svg)](LICENSE)
+[![API](https://img.shields.io/badge/API-ExchangeRate--API-orange.svg)](https://www.exchangerate-api.com)
 
----
+Um aplicativo web moderno e responsivo para consultar cotações de moedas em tempo real, desenvolvido com Flask e integrado à API ExchangeRate-API.
 
-## 🎯 O que é isso?
+## 📸 Demonstração
 
-Este aplicativo mostra o valor atualizado de moedas (como Dólar, Euro) ou criptomoedas (Bitcoin, Ethereum). Você pode usar para:
-- Ver o preço do dólar comercial
-- Acompanhar o valor do Bitcoin
-- Consultar qualquer outra moeda disponível na API
+<!-- Adicione uma imagem/gif do seu projeto aqui -->
+<!-- ![Sistema de Cotação](screenshot.png) -->
 
----
+## ✨ Funcionalidades
 
-## 🛠️ Tecnologias usadas
+- 🚀 **Cotações em Tempo Real** - Valores atualizados diretamente da API
+- 🌍 **Múltiplas Moedas** - Suporte para USD, BRL, EUR, JPY e muito mais
+- 📱 **Design Responsivo** - Funciona perfeitamente em desktop, tablet e mobile
+- 🎨 **Interface Moderna** - Layout limpo e profissional com animações suaves
+- ⚡ **Atualização Rápida** - Botão de refresh e timestamp automático
+- 🔒 **Segurança** - Chave de API protegida por variáveis de ambiente
+- 📊 **Cache Inteligente** - Otimização de requisições à API
 
-- **Python** - Lógica do aplicativo
-- **HTML/CSS** - Interface visual (se tiver)
-- **API de cotações** - Para buscar os valores atualizados
+## 🛠️ Tecnologias Utilizadas
 
----
+### Backend
+- **Python 3.7+** - Linguagem principal
+- **Flask 2.3.3** - Framework web
+- **Requests** - Consumo de API externa
+- **Python-Dotenv** - Gerenciamento de variáveis de ambiente
 
-## 🚀 Como usar (passo a passo)
+### Frontend
+- **HTML5** - Estrutura semântica
+- **CSS3** - Estilização moderna com flexbox e grid
+- **JavaScript** - Interatividade e atualização de timestamp
 
-### 1️⃣ Baixar o projeto
+### API
+- **ExchangeRate-API** - Fonte de dados de cotações
 
-**Opção 1 - Com Git:**
+## 📋 Pré-requisitos
+
+Antes de começar, você vai precisar ter instalado em sua máquina:
+
+- [Python 3.7+](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/) (opcional, para clonar o repositório)
+- Uma conta na [ExchangeRate-API](https://app.exchangerate-api.com/sign-up) para obter sua chave gratuita
+
+## 🚀 Como executar o projeto
+
+### 1️⃣ Clone o repositório
+
 ```bash
+# Clone este repositório
 git clone https://github.com/danielambrosim/App_Cotacao.git
+
+# Acesse a pasta do projeto
 cd App_Cotacao
