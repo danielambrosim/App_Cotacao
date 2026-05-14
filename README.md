@@ -22,22 +22,22 @@ git clone https://github.com/danielambrosim/App_Cotacao.git
 cd App_Cotacao
 ```
 
-# 2. Crie um ambiente virtual
+## 2. Crie um ambiente virtual
 ```bash
 python -m venv venv
 ```
 
-# Ative o ambiente:
-# Windows:
+## Ative o ambiente:
+## Windows:
 ```bash
 venv\Scripts\activate
 ```
-# Linux/Mac:
+## Linux/Mac:
 ```bash
 source venv/bin/activate
 ```
 
-# 3. Instale as dependências
+## 3. Instale as dependências
 ```bash
 pip install -r requirements.txt
 ```
