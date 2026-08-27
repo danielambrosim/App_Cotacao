@@ -27,6 +27,29 @@
         return;
     }
 
+    var SUBSCRIBED_COOKIE = "app_cotacao_subscribed=1";
+
+    function getCookie(name) {
+        var prefix = name + "=";
+        return document.cookie.split("; ").filter(function (item) {
+            return item.indexOf(prefix) === 0;
+        }).length > 0;
+    }
+
+    function setSubscribedCookie() {
+        var expires = new Date();
+        expires.setFullYear(expires.getFullYear() + 1);
+        document.cookie =
+            SUBSCRIBED_COOKIE +
+            "; path=/; max-age=" + (60 * 60 * 24 * 365) +
+            "; expires=" + expires.toUTCString() +
+            "; SameSite=Lax";
+    }
+
+    if (getCookie("app_cotacao_subscribed")) {
+        return;
+    }
+
     var DELAY_MS = 60 * 1000;
 
     setTimeout(function () {
@@ -68,7 +91,7 @@
             })
             .then(function (result) {
                 if (result.ok) {
-                    showMessage("E-mail cadastrado com sucesso!", false);
+                    setSubscribedCookie();
                     emailInput.value = "";
                     overlay.hidden = true;
                 } else if (result.data.error === "invalid_email") {
