@@ -1,21 +1,17 @@
-/* style.css - Sistema de Cotação de Moedas */
-
-/* Variáveis CSS para facilitar manutenção */
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
-    --success-color: #27ae60;
-    --danger-color: #e74c3c;
-    --warning-color: #ffecb3;
+    --success-color: #1e7e34;
+    --danger-color: #c0392b;
+    --warning-bg: #fff8e1;
     --background-light: #f5f5f5;
     --border-color: #ddd;
-    --text-dark: #333;
-    --text-light: #666;
-    --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --text-dark: #222;
+    --text-muted: #555;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Reset e estilos base */
 * {
     margin: 0;
     padding: 0;
@@ -23,7 +19,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -31,7 +27,6 @@ body {
     padding: 20px;
 }
 
-/* Container principal */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -53,7 +48,6 @@ body {
     }
 }
 
-/* Header */
 .header {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
@@ -62,22 +56,24 @@ body {
 }
 
 .header h1 {
-    font-size: 2.5em;
+    font-size: 2.2em;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    color: #fff;
 }
 
 .header p {
     font-size: 1.1em;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
-/* Conteúdo principal */
 .content {
     padding: 30px;
 }
 
-/* Tabela de cotações */
+.table-responsive {
+    overflow-x: auto;
+}
+
 .quotation-table {
     width: 100%;
     border-collapse: collapse;
@@ -90,14 +86,14 @@ body {
 
 .quotation-table thead {
     background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-    color: white;
+    color: #fff;
 }
 
 .quotation-table th {
     padding: 15px;
     text-align: left;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1.05em;
 }
 
 .quotation-table td {
@@ -107,66 +103,46 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.quotation-table tbody tr:nth-child(even) {
+    background: var(--background-light);
+}
+
 .quotation-table tbody tr:hover {
-    background-color: var(--background-light);
-    transform: scale(1.01);
-    transition: all 0.3s ease;
+    background: #eaf2fb;
 }
 
 .quotation-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* Destaque para moedas principais */
-.highlight {
-    background: linear-gradient(90deg, var(--warning-color) 0%, #fff3cd 100%);
-    font-weight: 600;
+.currency-flag {
+    margin-right: 8px;
 }
 
-.highlight:hover {
-    background: linear-gradient(90deg, #ffe0a3 0%, #ffe8b3 100%) !important;
-}
-
-/* Estilos para valores monetários */
 .currency-code {
     display: inline-block;
     background: var(--primary-color);
-    color: white;
+    color: #fff;
     padding: 3px 8px;
     border-radius: 5px;
     font-size: 0.85em;
     margin-left: 8px;
 }
 
-.buy-value, .sell-value {
+.value {
     font-weight: 600;
-    font-size: 1.1em;
-}
-
-.buy-value {
+    font-size: 1.15em;
     color: var(--success-color);
 }
 
-.sell-value {
-    color: var(--danger-color);
-}
-
-/* Mensagem de erro */
 .error-message {
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-    color: #721c24;
+    background: #fbe9e7;
+    color: #8b1a1a;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     margin: 20px 0;
-    border-left: 5px solid #dc3545;
-    animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+    border-left: 5px solid var(--danger-color);
 }
 
 .error-message strong {
@@ -175,14 +151,13 @@ body {
     margin-bottom: 10px;
 }
 
-/* Botão de atualização */
 .refresh-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-    color: white;
+    color: #fff;
     border: none;
     padding: 12px 24px;
     border-radius: 25px;
@@ -190,33 +165,44 @@ body {
     font-size: 1em;
     font-weight: 600;
     transition: all 0.3s ease;
-    margin: 20px auto;
     box-shadow: var(--shadow-md);
 }
 
 .refresh-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.refresh-button:focus-visible {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 2px;
 }
 
 .refresh-button:active {
     transform: translateY(0);
 }
 
-/* Container do botão */
+.refresh-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.refresh-button.is-loading {
+    pointer-events: none;
+}
+
 .button-container {
     text-align: center;
     margin: 20px 0;
 }
 
-/* Informações de atualização */
 .update-info {
     text-align: center;
     margin-top: 30px;
     padding: 20px;
     background: var(--background-light);
     border-radius: 10px;
-    color: var(--text-light);
+    color: var(--text-muted);
 }
 
 .update-time {
@@ -224,40 +210,54 @@ body {
     color: var(--primary-color);
 }
 
-/* Footer */
+.update-note {
+    font-size: 0.85em;
+    margin-top: 10px;
+}
+
 .footer {
     background: var(--background-light);
     padding: 20px;
     text-align: center;
-    color: var(--text-light);
+    color: var(--text-muted);
     font-size: 0.9em;
     border-top: 1px solid var(--border-color);
 }
 
-/* Responsividade */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 @media (max-width: 768px) {
     body {
         padding: 10px;
     }
-    
+
     .header h1 {
-        font-size: 1.8em;
+        font-size: 1.6em;
     }
-    
+
     .content {
         padding: 15px;
-        overflow-x: auto;
     }
-    
+
     .quotation-table {
         font-size: 0.9em;
     }
-    
+
     .quotation-table th,
     .quotation-table td {
         padding: 10px;
     }
-    
+
     .currency-code {
         display: inline;
         margin-left: 5px;
@@ -266,64 +266,29 @@ body {
 }
 
 @media (max-width: 480px) {
-    .quotation-table {
-        font-size: 0.8em;
-    }
-    
-    .quotation-table th,
     .quotation-table td {
-        padding: 8px;
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
     }
-    
+
+    .quotation-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .quotation-table th {
+        display: none;
+    }
+
     .refresh-button {
         padding: 10px 20px;
         font-size: 0.9em;
     }
-}
-
-/* Loading spinner */
-.loading {
-    text-align: center;
-    padding: 40px;
-}
-
-.loading::after {
-    content: '';
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    border: 4px solid var(--border-color);
-    border-top-color: var(--secondary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* Tooltip */
-[data-tooltip] {
-    position: relative;
-    cursor: help;
-}
-
-[data-tooltip]:before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--primary-color);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.8em;
-    white-space: nowrap;
-    display: none;
-    z-index: 10;
-}
-
-[data-tooltip]:hover:before {
-    display: block;
 }

@@ -1,58 +1,47 @@
 import os
-import requests
-from flask import Flask, render_template
-from dotenv import load_dotenv
 
-# Carrega as variáveis de ambiente do arquivo .env
+import requests
+from dotenv import load_dotenv
+from flask import Flask, render_template
+
 load_dotenv()
 
-# Cria uma instância do aplicativo Flask
 app = Flask(__name__)
 
-# Função para obter as cotações usando a chave de API do `.env`
+CURRENCIES = ("USD", "BRL", "EUR", "JPY")
+
+API_URL = "https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
+
+
 def get_exchange_rates():
-    # Obtém a chave de API do arquivo .env
+    """Retorna as taxas de câmbio para as moedas configuradas."""
     api_key = os.getenv("API_KEY")
-
-    # URL base da API com a chave de API obtida do arquivo .env
-    url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/USD"
-
-    try:
-        # Fazendo a requisição HTTP
-        response = requests.get(url)
-        response.raise_for_status()  # Lança um erro se o status não for 200
-        data = response.json()  # Parsing do JSON
-
-        # Verifica se o resultado da API foi bem-sucedido
-        if data['result'] == 'success':
-            # Extraindo as taxas de câmbio para BRL, EUR e JPY
-            rates = data['conversion_rates']
-            return {
-                "USD": rates.get("USD", "Taxa não encontrada"),
-                "BRL": rates.get("BRL", "Taxa não encontrada"),
-                "EUR": rates.get("EUR", "Taxa não encontrada"),
-                "JPY": rates.get("JPY", "Taxa não encontrada")
-            }
-        else:
-            print("Erro ao obter os dados da API:", data.get('error-type', 'Erro desconhecido'))
-            return {}
-
-    except requests.exceptions.RequestException as e:
-        print(f"Erro ao acessar a API: {e}")
+    if not api_key:
         return {}
 
-# Rota principal que renderiza o arquivo `index.html` e passa as cotações para ele
+    try:
+        response = requests.get(API_URL.format(api_key=api_key), timeout=10)
+        response.raise_for_status()
+        data = response.json()
+    except requests.exceptions.RequestException:
+        return {}
+
+    if data.get("result") != "success":
+        return {}
+
+    rates = data.get("conversion_rates", {})
+    return {currency: rates.get(currency) for currency in CURRENCIES}
+
+
 @app.route("/")
 def index():
-    # Obter as cotações
     quotations = get_exchange_rates()
-    
-    # Se não conseguiu obter as cotações, mostra mensagem de erro
-    if not quotations:
-        error_message = "Não foi possível carregar as cotações no momento. Tente novamente mais tarde."
-        return render_template("index.html", quotations=None, error=error_message)
-    
+    if not quotations or any(value is None for value in quotations.values()):
+        error = "Não foi possível carregar as cotações no momento. Tente novamente mais tarde."
+        return render_template("index.html", quotations=None, error=error)
+
     return render_template("index.html", quotations=quotations, error=None)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

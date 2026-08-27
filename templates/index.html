@@ -9,122 +9,85 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>💰 Sistema de Cotação de Moedas</h1>
+        <header class="header">
+            <h1>Sistema de Cotação de Moedas</h1>
             <p>Cotações atualizadas em tempo real com base no Dólar Americano (USD)</p>
-        </div>
+        </header>
 
-        <div class="content">
+        <main class="content">
             {% if error %}
-                <div class="error-message">
-                    <strong>⚠️ Erro ao carregar cotações</strong>
+                <div class="error-message" role="alert">
+                    <strong>Não foi possível carregar as cotações</strong>
                     {{ error }}
                 </div>
             {% elif quotations %}
-                <table class="quotation-table">
-                    <thead>
-                        <tr>
-                            <th>Moeda</th>
-                            <th>Compra</th>
-                            <th>Venda</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="highlight">
-                            <td data-tooltip="Dólar Americano">
-                                USD 🇺🇸
-                                <span class="currency-code">USD</span>
-                            </td>
-                            <td class="buy-value">$ {{ "%.4f"|format(quotations.USD) }}</td>
-                            <td class="sell-value">$ {{ "%.4f"|format(quotations.USD) }}</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td data-tooltip="Real Brasileiro">
-                                BRL 🇧🇷
-                                <span class="currency-code">BRL</span>
-                            </td>
-                            <td class="buy-value">R$ {{ "%.4f"|format(quotations.BRL) }}</td>
-                            <td class="sell-value">R$ {{ "%.4f"|format(quotations.BRL) }}</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td data-tooltip="Euro">
-                                EUR 🇪🇺
-                                <span class="currency-code">EUR</span>
-                            </td>
-                            <td class="buy-value">€ {{ "%.4f"|format(quotations.EUR) }}</td>
-                            <td class="sell-value">€ {{ "%.4f"|format(quotations.EUR) }}</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td data-tooltip="Iene Japonês">
-                                JPY 🇯🇵
-                                <span class="currency-code">JPY</span>
-                            </td>
-                            <td class="buy-value">¥ {{ "%.4f"|format(quotations.JPY) }}</td>
-                            <td class="sell-value">¥ {{ "%.4f"|format(quotations.JPY) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive" aria-live="polite">
+                    <table class="quotation-table">
+                        <caption class="sr-only">Cotações de moedas em relação ao Dólar Americano</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Moeda</th>
+                                <th scope="col">Cotação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="currency-flag" aria-hidden="true">&#x1F1FA;&#x1F1F8;</span>
+                                    Dólar Americano
+                                    <span class="currency-code">USD</span>
+                                </td>
+                                <td data-label="Cotação" class="value">$ {{ "%.4f"|format(quotations.USD) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="currency-flag" aria-hidden="true">&#x1F1E7;&#x1F1F7;</span>
+                                    Real Brasileiro
+                                    <span class="currency-code">BRL</span>
+                                </td>
+                                <td data-label="Cotação" class="value">R$ {{ "%.4f"|format(quotations.BRL) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="currency-flag" aria-hidden="true">&#x1F1EA;&#x1F1FA;</span>
+                                    Euro
+                                    <span class="currency-code">EUR</span>
+                                </td>
+                                <td data-label="Cotação" class="value">€ {{ "%.4f"|format(quotations.EUR) }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="currency-flag" aria-hidden="true">&#x1F1EF;&#x1F1F5;</span>
+                                    Iene Japonês
+                                    <span class="currency-code">JPY</span>
+                                </td>
+                                <td data-label="Cotação" class="value">¥ {{ "%.4f"|format(quotations.JPY) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="button-container">
+                    <button class="refresh-button" id="refreshButton">Atualizar Cotações</button>
+                </div>
+
+                <div class="update-info">
+                    <p>Última atualização: <span class="update-time" id="updateTime"></span></p>
+                    <p class="update-note">As cotações são baseadas no Dólar Americano (USD) e atualizadas automaticamente</p>
+                </div>
             {% else %}
-                <div class="error-message">
-                    <strong>⚠️ Sem dados disponíveis</strong>
+                <div class="error-message" role="alert">
+                    <strong>Sem dados disponíveis</strong>
                     Não foi possível carregar as cotações no momento. Tente novamente mais tarde.
                 </div>
             {% endif %}
+        </main>
 
-            <div class="button-container">
-                <button class="refresh-button" onclick="location.reload()">
-                    🔄 Atualizar Cotações
-                </button>
-            </div>
-
-            <div class="update-info">
-                <p>📊 Última atualização: <span class="update-time" id="updateTime"></span></p>
-                <p style="font-size: 0.85em; margin-top: 10px;">
-                    💡 As cotações são baseadas no Dólar Americano (USD) e atualizadas automaticamente
-                </p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>&copy; 2024 Sistema de Cotação de Moedas - Dados fornecidos por ExchangeRate-API</p>
-            <p>Desenvolvido com Flask e 💙</p>
-        </div>
+        <footer class="footer">
+            <p>© 2024 Sistema de Cotação de Moedas - Dados fornecidos por ExchangeRate-API</p>
+        </footer>
     </div>
 
-    <script>
-        // Atualização do timestamp
-        const updateTimeSpan = document.getElementById('updateTime');
-        if (updateTimeSpan) {
-            const now = new Date();
-            const options = {
-                dateStyle: 'full',
-                timeStyle: 'medium',
-                hour12: false
-            };
-            updateTimeSpan.textContent = now.toLocaleString('pt-BR', options);
-        }
-        
-        // Efeito de loading ao clicar no botão
-        const refreshBtn = document.querySelector('.refresh-button');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function(e) {
-                this.innerHTML = '⏳ Atualizando...';
-                this.disabled = true;
-                setTimeout(() => {
-                    location.reload();
-                }, 500);
-            });
-        }
-        
-        // Adicionar animação nas linhas da tabela
-        const rows = document.querySelectorAll('.quotation-table tbody tr');
-        rows.forEach((row, index) => {
-            row.style.animation = `fadeIn 0.3s ease ${index * 0.1}s forwards`;
-            row.style.opacity = '0';
-        });
-        
-        // Atualização automática a cada 5 minutos (opcional)
-        // setTimeout(() => location.reload(), 300000);
-    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
