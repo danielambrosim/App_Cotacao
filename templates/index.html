@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cotação de Moedas</title>
+    <title>App_Cotacao — Mercado de Câmbio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.svg') }}">
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>Sistema de Cotação de Moedas</h1>
-            <p>Cotações atualizadas em tempo real com base no Dólar Americano (USD)</p>
-        </header>
+        <div class="topbar" role="banner">
+            <span class="market-label">
+                <span class="live-dot" aria-hidden="true"></span>
+                Mercado de Câmbio
+            </span>
+            <span class="base-note">Base: USD</span>
+        </div>
 
-        <main class="content">
+        <main>
             {% if error %}
                 <div class="error-message" role="alert">
-                    <strong>Não foi possível carregar as cotações</strong>
+                    <strong>Erro na cotação</strong>
                     {{ error }}
                 </div>
             {% elif quotations %}
+                <div class="quote-header">
+                    <span class="title">Cotações em tempo real</span>
+                    <span class="subtitle">Base: USD · 1 unidade da moeda de base</span>
+                </div>
+
                 <div class="table-responsive" aria-live="polite">
                     <table class="quotation-table">
                         <caption class="sr-only">Cotações de moedas em relação ao Dólar Americano</caption>
@@ -32,48 +40,56 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
+                                <td class="cell-currency">
                                     <span class="currency-flag" aria-hidden="true">&#x1F1FA;&#x1F1F8;</span>
-                                    Dólar Americano
                                     <span class="currency-code">USD</span>
+                                    <span class="currency-name">Dólar Americano · moeda de base</span>
                                 </td>
-                                <td data-label="Cotação" class="value">$ {{ "%.4f"|format(quotations.USD) }}</td>
+                                <td>
+                                    <span class="value">{{ "%.4f"|format(quotations.USD) }}</span>
+                                    <span class="sub-value">US$ 1,0000</span>
+                                </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="cell-currency">
                                     <span class="currency-flag" aria-hidden="true">&#x1F1E7;&#x1F1F7;</span>
-                                    Real Brasileiro
                                     <span class="currency-code">BRL</span>
+                                    <span class="currency-name">Real Brasileiro</span>
                                 </td>
-                                <td data-label="Cotação" class="value">R$ {{ "%.4f"|format(quotations.BRL) }}</td>
+                                <td>
+                                    <span class="value">{{ "%.4f"|format(quotations.BRL) }}</span>
+                                    <span class="sub-value">US$ 1 = R$ {{ "%.4f"|format(quotations.BRL) }}</span>
+                                </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="cell-currency">
                                     <span class="currency-flag" aria-hidden="true">&#x1F1EA;&#x1F1FA;</span>
-                                    Euro
                                     <span class="currency-code">EUR</span>
+                                    <span class="currency-name">Euro</span>
                                 </td>
-                                <td data-label="Cotação" class="value">€ {{ "%.4f"|format(quotations.EUR) }}</td>
+                                <td>
+                                    <span class="value">{{ "%.4f"|format(quotations.EUR) }}</span>
+                                    <span class="sub-value">US$ 1 = € {{ "%.4f"|format(quotations.EUR) }}</span>
+                                </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="cell-currency">
                                     <span class="currency-flag" aria-hidden="true">&#x1F1EF;&#x1F1F5;</span>
-                                    Iene Japonês
                                     <span class="currency-code">JPY</span>
+                                    <span class="currency-name">Iene Japonês</span>
                                 </td>
-                                <td data-label="Cotação" class="value">¥ {{ "%.4f"|format(quotations.JPY) }}</td>
+                                <td>
+                                    <span class="value">{{ "%.4f"|format(quotations.JPY) }}</span>
+                                    <span class="sub-value">US$ 1 = ¥ {{ "%.4f"|format(quotations.JPY) }}</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="button-container">
-                    <button class="refresh-button" id="refreshButton">Atualizar Cotações</button>
-                </div>
-
-                <div class="update-info">
-                    <p>Última atualização: <span class="update-time" id="updateTime"></span></p>
-                    <p class="update-note">As cotações são baseadas no Dólar Americano (USD) e atualizadas automaticamente</p>
+                <div class="quote-footer">
+                    <span class="update-time">Última atualização: <b id="updateTime"></b></span>
+                    <button class="refresh-button" id="refreshButton">Atualizar</button>
                 </div>
             {% else %}
                 <div class="error-message" role="alert">
@@ -84,7 +100,7 @@
         </main>
 
         <footer class="footer">
-            <p>© 2024 Sistema de Cotação de Moedas - Dados fornecidos por ExchangeRate-API</p>
+            Dados fornecidos por ExchangeRate-API — App_Cotacao
         </footer>
     </div>
 
